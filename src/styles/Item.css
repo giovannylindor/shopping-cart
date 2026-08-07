@@ -4,4 +4,11 @@
 
 .productImg {
     width: 200px;
+    height: 200px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.prodTitle {
+    width: 200px;
 }

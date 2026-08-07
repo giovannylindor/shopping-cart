@@ -12,3 +12,8 @@
 .startShoppingBtn {
     cursor: pointer;
 }
+
+.main {
+    text-decoration: none;
+    color: black;
+}
