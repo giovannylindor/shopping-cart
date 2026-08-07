@@ -8,7 +8,7 @@ export default function App() {
     <>
     <html>
       <body>
-        <Theme accentColor="blue" grayColor="gray">
+        <Theme accentColor="blue" grayColor="gray" >
           <Navbar />
           <Outlet />
         </Theme>
