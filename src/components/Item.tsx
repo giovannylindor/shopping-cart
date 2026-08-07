@@ -9,20 +9,19 @@ interface ItemProps {
     id: number;
 }
 
-
 export const Item = ({ id }: ItemProps) => {
     const [productTitle, setProductTitle] = useState("");
     const [productImage, setProductImage] = useState(""); 
     const [productDescription, setProductDescription] = useState(""); 
     const [productPrice, setProductPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(0);
+    const [productAdded, setProductAdded] = useState(false);
 
     //function to fetch the item
     const fetchItem = async () => {
         try {
             const response = await axios.get('https://fakestoreapi.com/products');
-            const product = response.data[id];
-            console.log(product); 
+            const product = response.data[id]; 
             setProductTitle(product.title);
             setProductImage(product.image);
             setProductDescription(product.description);
@@ -33,12 +32,45 @@ export const Item = ({ id }: ItemProps) => {
     }
 
     const handleClick = () => {
-        return console.log("clicked")
+        setProductAdded(true);
+        setProductQuantity(pq => pq + 1); 
+    }
+
+    const addQuantity = () => {
+        setProductQuantity(pq => pq + 1);
+    }
+
+    const subtractQuantity = () => {
+        setProductQuantity(pq => pq - 1); 
+    }
+
+    function AddButtons(){
+        return (
+            <>
+            <Flex direction="row" gap='1'>
+            {productQuantity >= 1 && <>
+                <Button onClick={addQuantity}>+</Button>
+                <Button onClick={subtractQuantity}>-</Button>
+            </>}
+
+            </Flex>
+            </>
+        );
     }
 
     useEffect(() => {
         fetchItem(); 
     }, [id]);
+
+    useEffect(() => {
+        if(productAdded) {
+            console.log(`You want ${productQuantity} ${productTitle}!`);
+        }
+
+        return () => {
+            console.clear(); 
+        }
+    }, [productQuantity]);
 
     return (
         <>
@@ -46,9 +78,10 @@ export const Item = ({ id }: ItemProps) => {
                 <Card>
                     <Flex gap="1" direction="column" align="center">
                     <Link to="/product"><img src={productImage} alt={productDescription} className="productImg"/></Link>
-                    <h2 className="prodTitle">{productTitle}</h2>
+                    <Link to="/product" className="prodTitle"><h2 className="prodTitle">{productTitle}</h2></Link>
                     <h3>${productPrice}</h3>
                     <Button onClick={handleClick} className={"addToCartBtn"}>Add to Cart</Button>
+                    { productAdded && <AddButtons />}
                     </Flex>
                 </Card>
             </Box>

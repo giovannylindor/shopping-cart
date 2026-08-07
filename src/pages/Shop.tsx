@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import { Flex } from "@radix-ui/themes";
 
 export const Shop = () => {
+    
+    useEffect(() => {
+        document.title = "Shop";
+    }, [])
+
     return (
         <>
         <h1>Shop</h1>

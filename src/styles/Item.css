@@ -1,5 +1,6 @@
 .addToCartBtn {
     cursor: pointer;
+    text-decoration: none;
 }
 
 .productImg {
@@ -11,4 +12,11 @@
 
 .prodTitle {
     width: 200px;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    min-height: 90px;
+    max-height: 90px;
+    text-align: center;
 }
+
