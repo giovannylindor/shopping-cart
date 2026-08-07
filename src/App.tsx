@@ -1,5 +1,6 @@
-import { Home } from "./pages/Home"
 import { Theme } from "@radix-ui/themes"
+import { Navbar } from "./components/Navbar"
+import { Outlet } from "react-router"
 
 export default function App() {
   
@@ -8,7 +9,8 @@ export default function App() {
     <html>
       <body>
         <Theme accentColor="blue" grayColor="gray">
-          <Home /> 
+          <Navbar />
+          <Outlet />
         </Theme>
       </body>
     </html>

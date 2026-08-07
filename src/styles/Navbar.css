@@ -1,0 +1,14 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.shoppingCartIcon {
+    cursor: pointer;
+}
+
+
+.startShoppingBtn {
+    cursor: pointer;
+}
