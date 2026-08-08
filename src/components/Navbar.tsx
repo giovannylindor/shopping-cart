@@ -3,6 +3,7 @@ import '../styles/Navbar.css'
 import { Link } from "react-router";
 import { Flex } from "@radix-ui/themes";
 
+
 export const Navbar = () => {
     return (
         <>

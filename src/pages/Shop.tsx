@@ -1,5 +1,5 @@
 import { Item } from "../components/Item";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Flex } from "@radix-ui/themes";
 
 export const Shop = () => {

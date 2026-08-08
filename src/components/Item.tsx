@@ -4,7 +4,6 @@ import { Card, Box, Button, Flex } from "@radix-ui/themes";
 import '../styles/Item.css'
 import { Link } from "react-router";
 
-
 interface ItemProps {
     id: number;
 }
@@ -65,7 +64,10 @@ export const Item = ({ id }: ItemProps) => {
     useEffect(() => {
         if(productAdded) {
             console.log(`You want ${productQuantity} ${productTitle}!`);
+            
         }
+
+
 
         return () => {
             console.clear(); 
@@ -89,3 +91,4 @@ export const Item = ({ id }: ItemProps) => {
         </>
     );
 };
+
