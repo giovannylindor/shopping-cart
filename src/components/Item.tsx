@@ -48,10 +48,9 @@ export const Item = ({ id }: ItemProps) => {
             <>
             <Flex direction="row" gap='1'>
             {productQuantity >= 1 && <>
-                <Button onClick={addQuantity}>+</Button>
-                <Button onClick={subtractQuantity}>-</Button>
+                <Button onClick={addQuantity}className="addToCartBtn">+</Button>
+                <Button onClick={subtractQuantity} className="addToCartBtn">-</Button>
             </>}
-
             </Flex>
             </>
         );
@@ -63,11 +62,8 @@ export const Item = ({ id }: ItemProps) => {
 
     useEffect(() => {
         if(productAdded) {
-            console.log(`You want ${productQuantity} ${productTitle}!`);
-            
+            console.log(`You want ${productQuantity} ${productTitle}!`);   
         }
-
-
 
         return () => {
             console.clear(); 
@@ -91,4 +87,3 @@ export const Item = ({ id }: ItemProps) => {
         </>
     );
 };
-
