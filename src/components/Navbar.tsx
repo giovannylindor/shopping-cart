@@ -2,12 +2,12 @@ import { ShoppingCart } from "lucide-react";
 import '../styles/Navbar.css'
 import { Link } from "react-router";
 import { Flex } from "@radix-ui/themes";
-import { useCart} from "../contexts/CartContext";
+
 
 
 
 export const Navbar = () => {
-    const {cartQuantity } = useCart();
+
 
     return (
         <>
@@ -17,7 +17,7 @@ export const Navbar = () => {
                         <h1>Shopping Cart App</h1>
                     </Link>
                     <Link to="/cart" className="cart">
-                    <p className="cartNumber">{cartQuantity > 0 && cartQuantity}</p>
+                    <p className="cartNumber">{}</p>
                     <ShoppingCart className="shoppingCartIcon"/>    
                     </Link>
             </Flex>

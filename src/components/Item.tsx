@@ -17,9 +17,36 @@ export const Item = ({ id }: ItemProps) => {
     const [productQuantity, setProductQuantity] = useState(0);
     const [productAdded, setProductAdded] = useState(false);
 
-    
+    const handleClick = () => {
+        setProductAdded(true);
+        setProductQuantity(pq => pq + 1);
+        
+    }
 
-    //function to fetch the item
+    const addQuantity = () => {
+        setProductQuantity(pq => pq + 1);
+    }
+
+    const subtractQuantity = () => {
+        setProductQuantity(pq => pq - 1);
+    }
+        
+    function AddButtons(){
+        return (
+            <>
+            <Flex direction="row" gap='1'>
+            {productAdded && productQuantity > 0 && <>
+                <Button className="addToCartBtn" onClick={addQuantity}>+</Button>
+                <Button className="addToCartBtn" onClick={subtractQuantity}>-</Button>
+            </>
+            }
+            </Flex>
+            </>
+        );
+    }
+
+    useEffect(() => {
+            //function to fetch the item
     const fetchItem = async () => {
         try {
             const response = await axios.get('https://fakestoreapi.com/products');
@@ -32,39 +59,6 @@ export const Item = ({ id }: ItemProps) => {
             console.log(error);
         }
     }
-
-    const handleClick = () => {
-        setProductAdded(true);
-
-        setProductQuantity(pq => pq + 1);
-        
-    }
-
-    const addQuantity = () => {
-
-        setProductQuantity(pq => pq + 1);
-    }
-
-    const subtractQuantity = () => {
-        
-        setProductQuantity(pq => pq - 1);
-     
-    }
-        
-    function AddButtons(){
-        return (
-            <>
-            <Flex direction="row" gap='1'>
-            {productAdded && productQuantity > 0 && <>
-                <Button className="addToCartBtn" onClick={addQuantity}>+</Button>
-                <Button className="addToCartBtn" onClick={subtractQuantity}>-</Button>
-            </>}
-            </Flex>
-            </>
-        );
-    }
-
-    useEffect(() => {
         fetchItem(); 
     }, [id]);
 
