@@ -19,3 +19,16 @@
     text-decoration: none;
     color: black;
 }
+
+.cartNumber{
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: -0.1rem;
+}
+
+.cart {
+    text-decoration: none;
+}

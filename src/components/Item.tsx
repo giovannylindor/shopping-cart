@@ -4,6 +4,7 @@ import { Card, Box, Button, Flex } from "@radix-ui/themes";
 import '../styles/Item.css'
 import { Link } from "react-router";
 
+
 interface ItemProps {
     id: number;
 }
@@ -11,10 +12,12 @@ interface ItemProps {
 export const Item = ({ id }: ItemProps) => {
     const [productTitle, setProductTitle] = useState("");
     const [productImage, setProductImage] = useState(""); 
-    const [productDescription, setProductDescription] = useState(""); 
+    //const [productDescription, setProductDescription] = useState(""); 
     const [productPrice, setProductPrice] = useState(0);
     const [productQuantity, setProductQuantity] = useState(0);
     const [productAdded, setProductAdded] = useState(false);
+
+    
 
     //function to fetch the item
     const fetchItem = async () => {
@@ -23,7 +26,7 @@ export const Item = ({ id }: ItemProps) => {
             const product = response.data[id]; 
             setProductTitle(product.title);
             setProductImage(product.image);
-            setProductDescription(product.description);
+            //setProductDescription(product.description);
             setProductPrice(Math.trunc(product.price));
         } catch (error) {
             console.log(error);
@@ -32,24 +35,29 @@ export const Item = ({ id }: ItemProps) => {
 
     const handleClick = () => {
         setProductAdded(true);
-        setProductQuantity(pq => pq + 1); 
+
+        setProductQuantity(pq => pq + 1);
+        
     }
 
     const addQuantity = () => {
+
         setProductQuantity(pq => pq + 1);
     }
 
     const subtractQuantity = () => {
-        setProductQuantity(pq => pq - 1); 
+        
+        setProductQuantity(pq => pq - 1);
+     
     }
-
+        
     function AddButtons(){
         return (
             <>
             <Flex direction="row" gap='1'>
-            {productQuantity >= 1 && <>
-                <Button onClick={addQuantity}className="addToCartBtn">+</Button>
-                <Button onClick={subtractQuantity} className="addToCartBtn">-</Button>
+            {productAdded && productQuantity > 0 && <>
+                <Button className="addToCartBtn" onClick={addQuantity}>+</Button>
+                <Button className="addToCartBtn" onClick={subtractQuantity}>-</Button>
             </>}
             </Flex>
             </>
@@ -68,15 +76,16 @@ export const Item = ({ id }: ItemProps) => {
         return () => {
             console.clear(); 
         }
-    }, [productQuantity]);
+    }, [productAdded, productQuantity]);
 
     return (
         <>
             <Box maxHeight="250px" maxWidth="300px">
                 <Card>
                     <Flex gap="1" direction="column" align="center">
-                    <Link to="/product"><img src={productImage} alt={productDescription} className="productImg"/></Link>
+                    <Link to="/product"><img src={productImage} alt={productTitle} className="productImg"/></Link>
                     <Link to="/product" className="prodTitle"><h2 className="prodTitle">{productTitle}</h2></Link>
+                    
                     <h3>${productPrice}</h3>
                     <Button onClick={handleClick} className={"addToCartBtn"}>Add to Cart</Button>
                     { productAdded && <AddButtons />}
