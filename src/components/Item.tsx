@@ -3,6 +3,7 @@ import axios from "axios";
 import { Card, Box, Button, Flex } from "@radix-ui/themes";
 import '../styles/Item.css'
 import { Link } from "react-router";
+import { useCart } from "../contexts/CartContext";
 
 
 interface ItemProps {
@@ -12,30 +13,54 @@ interface ItemProps {
 export const Item = ({ id }: ItemProps) => {
     const [productTitle, setProductTitle] = useState("");
     const [productImage, setProductImage] = useState(""); 
-    //const [productDescription, setProductDescription] = useState(""); 
     const [productPrice, setProductPrice] = useState(0);
-    const [productQuantity, setProductQuantity] = useState(0);
-    const [productAdded, setProductAdded] = useState(false);
+    const cartInfo = useCart(); 
+    const cartItem = cartInfo.totalCart.find(item => item.productID === id);
 
     const handleClick = () => {
-        setProductAdded(true);
-        setProductQuantity(pq => pq + 1);
+        const product = {
+            productID: id,
+            productQuantity: 1,  
+            productAdded: true, 
+        };
+
+        if (cartItem){
+                cartInfo.setTotalCart(prev => 
+            prev.map(item => item.productID === id ? 
+                { ...item, productQuantity: item.productQuantity + 1}
+            : item )
+        );
+        } else {
+            cartInfo?.setTotalCart(prev => [...prev, product]);
+        }
         
     }
 
     const addQuantity = () => {
-        setProductQuantity(pq => pq + 1);
+        
+        cartInfo.setTotalCart(prev => 
+            prev.map(item => item.productID === id ? 
+                { ...item, productQuantity: item.productQuantity + 1}
+            : item )
+        );
+        cartInfo?.setCartQuantity(cq => cq + 1);
     }
 
     const subtractQuantity = () => {
-        setProductQuantity(pq => pq - 1);
+        cartInfo?.setTotalCart(prev => 
+            prev.map(item => item.productID === id ? 
+                { ...item, productQuantity: item.productQuantity - 1}
+            : item )
+        );
+        cartInfo?.setCartQuantity(cq => cq - 1);
     }
         
     function AddButtons(){
+        const cartItem = cartInfo?.totalCart.find(item => item.productID === id);
         return (
             <>
             <Flex direction="row" gap='1'>
-            {productAdded && productQuantity > 0 && <>
+            { cartItem?.productAdded && cartItem.productQuantity > 0 && <>
                 <Button className="addToCartBtn" onClick={addQuantity}>+</Button>
                 <Button className="addToCartBtn" onClick={subtractQuantity}>-</Button>
             </>
@@ -53,7 +78,6 @@ export const Item = ({ id }: ItemProps) => {
             const product = response.data[id]; 
             setProductTitle(product.title);
             setProductImage(product.image);
-            //setProductDescription(product.description);
             setProductPrice(Math.trunc(product.price));
         } catch (error) {
             console.log(error);
@@ -62,15 +86,15 @@ export const Item = ({ id }: ItemProps) => {
         fetchItem(); 
     }, [id]);
 
-    useEffect(() => {
-        if(productAdded) {
-            console.log(`You want ${productQuantity} ${productTitle}!`);   
+    useEffect(() => {        
+        if(cartItem?.productAdded){
+            console.log(`You want ${cartItem?.productQuantity} ${productTitle}!`);   
         }
 
         return () => {
             console.clear(); 
         }
-    }, [productAdded, productQuantity]);
+    }, [cartItem?.productAdded, cartItem?.productQuantity]);
 
     return (
         <>
@@ -82,7 +106,7 @@ export const Item = ({ id }: ItemProps) => {
                     
                     <h3>${productPrice}</h3>
                     <Button onClick={handleClick} className={"addToCartBtn"}>Add to Cart</Button>
-                    { productAdded && <AddButtons />}
+                    { cartItem?.productAdded && <AddButtons />}
                     </Flex>
                 </Card>
             </Box>
