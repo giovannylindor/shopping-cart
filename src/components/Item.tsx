@@ -98,7 +98,7 @@ export const Item = ({ id }: ItemProps) => {
 
     return (
         <>
-            <Box maxHeight="250px" maxWidth="300px">
+            <Box maxWidth="300px">
                 <Card>
                     <Flex gap="1" direction="column" align="center">
                     <Link to="/product"><img src={productImage} alt={productTitle} className="productImg"/></Link>

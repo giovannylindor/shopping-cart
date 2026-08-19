@@ -1,8 +1,13 @@
 import { Button } from "@radix-ui/themes";
 import '../styles/Home.css';
 import { Link } from "react-router";
+import { useEffect } from "react";
 
 export const Home = () => {
+    useEffect(() => {
+        document.title = 'Homepage'; 
+    }, []);
+
 
     return (
         <>
